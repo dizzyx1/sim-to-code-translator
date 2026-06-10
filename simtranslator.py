@@ -210,7 +210,15 @@ st.markdown("""
     --radius:    14px;
     --transition: 0.22s cubic-bezier(.4,0,.2,1);
 }
-html, body, .stApp { background: var(--navy) !important; cursor: default !important; }
+
+html, body { background: var(--navy) !important; cursor: default !important; }
+.stApp { 
+    background-color: var(--navy) !important; 
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxNDAwIDkwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgc2xpY2UiPjxkZWZzPjxyYWRpYWxHcmFkaWVudCBpZD0ic2ciIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmYWZjMSIgc3RvcC1vcGFjaXR5PSIwLjYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmFmYzEiIHN0b3Atb3BhY2l0eT0iMCIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxnIGZpbGw9IiNmZmFmYzEiIGZpbGwtb3BhY2l0eT0iMC4zIj48cGF0aCBkPSJNIDcwMCw0MCBMIDcwNCw0OCBMIDcxMiw1MCBMIDcwNCw1MiBMIDcwMCw2MCBMIDY5Niw1MiBMIDY4OCw1MCBMIDY5Niw0OCBaIi8+PHBhdGggZD0iTSAyMDAsODAgTCAyMDIsODQgTCAyMDYsODUgTCAyMDIsODYgTCAyMDAsOTAgTCAxOTgsODYgTCAxOTQsODUgTCAxOTgsODQgWiIvPjxwYXRoIGQ9Ik0gMTIwMCw5MCBMIDEyMDIsOTQgTCAxMjA2LDk1IEwgMTIwMiw5NiBMIDEyMDAsMTAwIEwgMTE5OCw5NiBMIDExOTQsOTUgTCAxMTk4LDk0IFoiLz48L2c+PGcgc3Ryb2tlPSIjZmZhZmMxIiBzdHJva2Utb3BhY2l0eT0iMC4xNSIgc3Ryb2tlLXdpZHRoPSIwLjgiIGZpbGw9Im5vbmUiPjxsaW5lIHgxPSI2MCIgeTE9IjgwIiB4Mj0iMTQwIiB5Mj0iMTMwIi8+PGxpbmUgeDE9IjE0MCIgeTE9IjEzMCIgeDI9IjIxMCIgeTI9IjkwIi8+PGxpbmUgeDE9IjIxMCIgeTE9IjkwIiB4Mj0iMjYwIiB5Mj0iMTU1Ii8+PGxpbmUgeDE9IjYwIiB5MT0iODAiIHgyPSI5NSIgeTI9IjE3MCIvPjxsaW5lIHgxPSI5NSIgeTE9IjE3MCIgeDI9IjE0MCIgeTI9IjEzMCIvPjxsaW5lIHgxPSIxNDAiIHkxPSIxMzAiIHgyPSIxNzUiIHkyPSIyMDAiLz48L2c+PGcgZmlsbD0iI2ZmYWZjMSIgZmlsbC1vcGFjaXR5PSIwLjUiPjxjaXJjbGUgY3g9IjYwIiBjeT0iODAiIHI9IjEuNSIvPjxjaXJjbGUgY3g9IjE0MCIgY3k9IjEzMCIgcj0iMy41Ii8+PGNpcmNsZSBjeD0iMjEwIiBjeT0iOTAiIHI9IjEuNSIvPjxjaXJjbGUgY3g9IjI2MCIgY3k9IjE1NSIgcj0iMS44Ii8+PC9nPjwvc3ZnPg==") !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    cursor: default !important;
+}
 body { font-family: 'DM Sans', sans-serif !important; }
 
 /* Smooth Global View Transitions */
@@ -319,46 +327,17 @@ button[data-testid="baseButton-secondary"]:hover {
     border-color: #ffafc1 !important;
     color: #ffffff !important;
 }
+            
+
 </style>
-""", unsafe_allow_html=True)
-
-# ══════════════════════════════════════════════
-#  INTRICATE GEOMETRIC STAR BACKGROUND OVERLAY
-# ══════════════════════════════════════════════
-st.markdown("""
-<div aria-hidden="true" style="position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:-1; overflow:hidden; opacity:0.65;">
-  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <radialGradient id="sg" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#ffafc1" stop-opacity="0.6"/>
-        <stop offset="100%" stop-color="#ffafc1" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    
-    <g fill="#ffafc1" fill-opacity="0.3">
-      <path d="M 700,40 L 704,48 L 712,50 L 704,52 L 700,60 L 696,52 L 688,50 L 696,48 Z"/>
-      <path d="M 200,80 L 202,84 L 206,85 L 202,86 L 200,90 L 198,86 L 194,85 L 198,84 Z"/>
-      <path d="M 1200,90 L 1202,94 L 1206,95 L 1202,96 L 1200,100 L 1198,96 L 1194,95 L 1198,94 Z"/>
-    </g>
-
-    <g stroke="#ffafc1" stroke-opacity="0.15" stroke-width="0.8" fill="none">
-      <line x1="60" y1="80" x2="140" y2="130"/><line x1="140" y1="130" x2="210" y2="90"/>
-      <line x1="210" y1="90" x2="260" y2="155"/><line x1="60" y1="80" x2="95" y2="170"/>
-      <line x1="95" y1="170" x2="140" y2="130"/><line x1="140" y1="130" x2="175" y2="200"/>
-    </g>
-    <g fill="#ffafc1" fill-opacity="0.5">
-      <circle cx="60"  cy="80"  r="1.5"/><circle cx="140" cy="130" r="3.5"/>
-      <circle cx="210" cy="90"  r="1.5"/><circle cx="260" cy="155" r="1.8"/>
-    </g>
-  </svg>
-</div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
 <div class="site-header">
   <div>
     <div style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:#8880a0;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">✦ &nbsp;gcsim script translator</div>
-    <h1 style="margin:0!important;padding:0!important">gcsim script translator by @dizzyy.x</h1>
+    <h1 style="margin:0!important;padding:0!important;">gcsim script translator</h1>
+    <div style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:#8880a0;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">made by @dizzyy.x and @demongiyu</h2>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -428,16 +407,30 @@ with col_chars:
 
             st.markdown("<div style='color:var(--pink);font-size:0.8rem;margin-top:12px;margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;'>Constellation Sequence</div>", unsafe_allow_html=True)
             
-            con_cols = st.columns(7)
-            for c_idx in range(7):
+            con_cols = st.columns(6)
+            for c_idx in range(1,7):
                 cd = load_local_constellation(c_name, c_idx)
                 tooltip = f"{cd['name']}\n\n{cd['description']}"
                 
                 # Lights up all nodes up to the selected constellation
-                btn_type = "primary" if c_idx <= st.session_state[f"cons_val_{i}"] else "secondary"
+            
                 
-                if con_cols[c_idx].button(f"C{c_idx}", help=tooltip, key=f"con_btn_{i}_{c_idx}", type=btn_type, use_container_width=True):
-                    st.session_state[f"cons_val_{i}"] = c_idx
+                btn_type = "primary" if c_idx <= st.session_state[f"cons_val_{i}"] else "secondary"
+
+                if con_cols[c_idx-1].button(
+                    f"C{c_idx}",
+                    help=tooltip,
+                    key=f"con_btn_{i}_{c_idx}",
+                    type=btn_type,
+                    use_container_width=True
+                ):
+                    current = st.session_state[f"cons_val_{i}"]
+
+                    if current == c_idx:
+                        st.session_state[f"cons_val_{i}"] = max(0, current - 1)
+                    else:
+                        st.session_state[f"cons_val_{i}"] = c_idx
+
                     st.rerun()
 
             c_cons = st.session_state[f"cons_val_{i}"]
