@@ -35,7 +35,7 @@ FOUR_STAR_SETS = {
 ACTIONS = {
     "e": "skill", "he": "skill[hold=1]", "te": "skill", "q": "burst",
     "c": "charge", "d": "dash", "j": "jump", "aim": "aim",
-    "lp": "low_plunge", "hp": "high_plunge", "w": "walk"
+    "lp": "low_plunge", "hp": "high_plunge", "w": "walk", "f": "charge[final=1]"
 }
 
 DEFAULT_LOADOUTS = [
@@ -107,7 +107,7 @@ def translate_rotation(rotation_text, char_list):
     active_team = {c['name'].lower() for c in char_list if c['name']}
     words = rotation_text.split()
     result, current_chain = [], []
-    action_pattern = re.compile(r"^(n\d+)?([eqcdjawphlteh]+)$|^(n\d+)$")
+    action_pattern = re.compile(r"^(n\d+)?([eqcdjawphltehf]+)$|^(n\d+)$")
     for word in words:
         clean = word.lower().strip(",;")
         if clean in active_team or not action_pattern.match(clean):
@@ -295,7 +295,30 @@ label[data-testid="stWidgetLabel"] p {
 .cons-badge { display: inline-block; background: rgba(255,175,193,0.15); border: 1px solid rgba(255,175,193,0.3); border-radius: 20px; padding: 2px 12px; font-size: 0.72rem; color: var(--pink); font-weight: 600; margin-bottom: 8px; }
 
 div[data-testid="stCodeBlock"] pre { height: 60vh !important; border: 1px solid var(--border) !important; border-radius: var(--radius) !important; background: #0a0c16 !important; }
-.stButton > button { background: linear-gradient(135deg, rgba(255,175,193,0.14) 0%, rgba(255,175,193,0.06) 100%) !important; border: 1px solid var(--pink) !important; border-radius: 8px !important; color: var(--pink) !important; font-weight: 600; }
+
+/* (Primary) Constellation Buttons */
+div[data-testid="stButton"] button[kind="primary"],
+button[data-testid="baseButton-primary"] {
+    background: rgba(67, 0, 41, 0.86) !important; /* Change inside color here */
+    border: 1px solid rgba(181, 88, 145, 0.86) !important; /* Change outline color here */
+    box-shadow: 0 0 12px rgba(67, 0, 41, 0.86) !important; /* Change glow here */
+    color: #ffffff !important;                       /* Change text color here */
+    font-weight: 700 !important;
+}
+
+/* (Secondary) Constellation Buttons */
+div[data-testid="stButton"] button[kind="secondary"],
+button[data-testid="baseButton-secondary"] {
+    background: transparent !important;
+    border: 1px solid rgba(255, 175, 193, 0.2) !important;
+    color: #8880a0 !important;
+}
+
+div[data-testid="stButton"] button[kind="secondary"]:hover,
+button[data-testid="baseButton-secondary"]:hover {
+    border-color: #ffafc1 !important;
+    color: #ffffff !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -395,13 +418,29 @@ with col_chars:
             with col_sel_w: c_weap = st.selectbox("Weapon", options=[w.title() for w in WEAPON_LIST], index=get_idx([w.title() for w in WEAPON_LIST], d["weap"]), key=f"w{i}")
             with col_img_w: st.markdown(f'<div style="margin-top: 30px;"><img src="{get_local_asset_url(c_weap, "weapons")}" class="inline-img"></div>', unsafe_allow_html=True)
 
-            sl1, sl2, sl3 = st.columns(3)
+            sl1, sl2 = st.columns(2)
             c_lvl  = sl1.number_input("Level", 1, 90, 90, key=f"l{i}")
-            c_ref  = sl3.number_input("Refine", 1, 5, d["ref"], key=f"r{i}")
-            with sl2: c_cons = st.number_input("Cons", 0, 6, d["cons"], key=f"con{i}")
+            c_ref  = sl2.number_input("Refine", 1, 5, d["ref"], key=f"r{i}")
 
-            cd = load_local_constellation(c_name, c_cons)
-            st.markdown(f"<div class='cons-panel'><div class='cons-title'>✦ {cd['name']}</div><div class='cons-desc'>{cd['description']}</div></div>", unsafe_allow_html=True)
+            # Initialize session state for this character slot's constellation
+            if f"cons_val_{i}" not in st.session_state:
+                st.session_state[f"cons_val_{i}"] = d["cons"]
+
+            st.markdown("<div style='color:var(--pink);font-size:0.8rem;margin-top:12px;margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;'>Constellation Sequence</div>", unsafe_allow_html=True)
+            
+            con_cols = st.columns(7)
+            for c_idx in range(7):
+                cd = load_local_constellation(c_name, c_idx)
+                tooltip = f"{cd['name']}\n\n{cd['description']}"
+                
+                # Lights up all nodes up to the selected constellation
+                btn_type = "primary" if c_idx <= st.session_state[f"cons_val_{i}"] else "secondary"
+                
+                if con_cols[c_idx].button(f"C{c_idx}", help=tooltip, key=f"con_btn_{i}_{c_idx}", type=btn_type, use_container_width=True):
+                    st.session_state[f"cons_val_{i}"] = c_idx
+                    st.rerun()
+
+            c_cons = st.session_state[f"cons_val_{i}"]
 
             with st.expander(" Artifact Sets"):
                 col_img_a1, col_sel_a1, col_count_a1 = st.columns([0.15, 0.65, 0.2])
